@@ -103,6 +103,15 @@ input[type=range]{width:100%;accent-color:#ffd36e;height:30px}
 .rt small{font-size:24px;color:var(--mut);margin-left:2px}.ri{width:62px;height:62px;flex:none}
 .tg{font-family:-apple-system,"Segoe UI",sans-serif;font-style:normal;font-size:11px;font-weight:600;background:#ffd36e;color:#3a2a00;border-radius:8px;padding:2px 7px;margin-left:10px;vertical-align:middle}
 .rx .ds2{display:block;font-size:17px;color:var(--ink);margin:2px 0}
+@media (max-width:480px){
+.glass{padding:14px 12px 10px;border-radius:20px}
+#drd{flex-wrap:wrap;gap:6px 12px}
+#drd .rx{flex:1 1 100%;min-width:0}
+#drd .rx b em{display:block;margin:2px 0 0}
+#drd .rt{font-size:38px}#drd .rt small{font-size:20px}#drd .ri{width:52px;height:52px}
+#drd .st span{font-size:12px;padding:4px 8px}
+#drd .ds2{font-size:16px}
+}
 .halo{animation:halo 3.6s ease-in-out infinite}@keyframes halo{0%,100%{opacity:.14}60%{opacity:.42}}
 .grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;text-align:center;font-size:11px;color:var(--mut);margin-top:8px}
 @media (max-width:700px){.grid{grid-template-columns:repeat(12,1fr)}}
@@ -422,7 +431,7 @@ function daysInit(){
     const dt=new Date(d.time[dsel]+'T12:00'),sr=d.sunrise[dsel].slice(11),ss=d.sunset[dsel].slice(11),len=clock(ss)-clock(sr),code=d.weather_code[dsel],pr=+d.precipitation_sum[dsel];
     $('drd').innerHTML='<svg class="ri" viewBox="-15 -15 30 30">'+wxIcon(code,false)+'</svg>'
       +'<span class="rt">'+r(d.temperature_2m_max[dsel])+'°<small>/'+r(d.temperature_2m_min[dsel])+'°</small></span>'
-      +'<span class="rx"><b>'+cap(dt.toLocaleDateString('uk',{weekday:'long'}))+'<em>'+dt.toLocaleDateString('uk',{day:'numeric',month:'long'})+'</em>'+(dsel?'':'<i class="tg">сьогодні</i>')+'</b>'
+      +'<span class="rx"><b>'+cap(dt.toLocaleDateString('uk',{weekday:'long'}))+''+(dsel?'':'<i class="tg">сьогодні</i>')+'<em>'+dt.toLocaleDateString('uk',{day:'numeric',month:'long'})+'</em></b>'
       +'<span class="ds2">'+wi(code)[1]+'</span><div class="st" style="margin-top:6px"><span>💧 '+(pr>=0.1?pr.toFixed(1)+' мм':'без опадів')+'</span><span>🌅 '+sr+'</span><span>🌇 '+ss+'</span><span>☀️ '+Math.floor(len)+' год '+p2(Math.round((len%1)*60))+' хв</span></div></span>';
     document.querySelectorAll('.tl2').forEach(t=>t.setAttribute('opacity',+t.dataset.i===dsel?1:0));
     document.querySelectorAll('.dd').forEach(c=>c.setAttribute('r',+c.dataset.i===dsel?6.5:4));
