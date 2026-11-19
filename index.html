@@ -112,6 +112,26 @@ input[type=range]{width:100%;accent-color:#ffd36e;height:30px}
 #drd .st span{font-size:12px;padding:4px 8px}
 #drd .ds2{font-size:16px}
 }
+.cbtn{display:flex;align-items:center;gap:12px;width:100%;font:inherit;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:18px;padding:10px 14px;cursor:pointer;text-align:left}
+.cbtn .ce{font-size:30px}.cbtn small{display:block;color:var(--mut);font-size:11px}.cbtn b{font-size:19px;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif}.cbtn .chv{margin-left:auto;font-size:13px;color:var(--sun)}
+.md{position:fixed;inset:0;background:rgba(5,15,35,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+.md.on{opacity:1;pointer-events:auto}
+.mdb{width:100%;max-width:520px;background:rgba(28,48,84,.94);border:1px solid rgba(255,255,255,.22);border-radius:26px 26px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .3s cubic-bezier(.3,.8,.3,1)}
+.md.on .mdb{transform:none}
+@media (min-width:700px){.md{align-items:center}.mdb{border-radius:26px}}
+.mdb h3{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:24px;margin:0 4px 14px}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc{font:inherit;color:#fff;text-align:left;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.mc .mce{font-size:38px;line-height:1.1}.mc b{font-size:17px}.mc small{color:var(--mut);font-size:12px}
+.mc[aria-pressed=true]{border-color:#ffd36e;background:rgba(255,211,110,.16);box-shadow:0 0 16px rgba(255,211,110,.3)}
+.mx{width:100%;margin-top:12px;font:inherit;color:var(--mut);background:none;border:0;padding:10px;cursor:pointer}
+.ar{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}
+.ar input{accent-color:#ffd36e;width:20px;height:20px;margin-top:3px;flex:none}
+.ar .ae{font-size:26px;line-height:1.1}.ar .at{flex:1;min-width:0}.ar .at b{display:block;font-size:15px}.ar .at small{display:block;color:var(--mut);font-size:13px;line-height:1.4;margin-top:2px}
+.sp{font-size:11px;font-weight:600;border-radius:8px;padding:3px 8px;white-space:nowrap}
+.s-now{background:#ff9a62;color:#331500}.s-soon{background:#ffd36e;color:#3a2a00}.s-ok{background:rgba(255,255,255,.18);color:var(--mut)}
+.ar.done{opacity:.5}.ar.done b{text-decoration:line-through}
+.rs{font:inherit;font-size:13px;color:var(--mut);background:none;border:0;margin-top:8px;cursor:pointer;text-decoration:underline}
 .halo{animation:halo 3.6s ease-in-out infinite}@keyframes halo{0%,100%{opacity:.14}60%{opacity:.42}}
 .grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;text-align:center;font-size:11px;color:var(--mut);margin-top:8px}
 @media (max-width:700px){.grid{grid-template-columns:repeat(12,1fr)}}
@@ -148,10 +168,11 @@ svg{width:100%;height:auto;display:block;overflow:visible}
   <nav role="tablist">
     <button role="tab" data-t="h" aria-selected="true">Сьогодні</button>
     <button role="tab" data-t="d" aria-selected="false">7 днів</button>
-    <button role="tab" data-t="k" aria-selected="false">Одяг</button>
+    <button role="tab" data-t="k" aria-selected="false">Поради</button>
   </nav>
   <section id="v"></section>
 </main>
+<div class="md" id="md" aria-hidden="true"></div>
 <script>
 window.addEventListener('error',e=>{const f=document.getElementById('fail');f.style.display='block';f.textContent='Помилка: '+e.message+' (рядок '+e.lineno+')'});
 if(location.protocol==='file:'){window.addEventListener('DOMContentLoaded',()=>{const f=document.getElementById('fail');f.style.display='block';f.textContent='Файл відкрито локально. Якщо погода не завантажується, відкрийте сторінку за посиланням (Netlify чи GitHub Pages), а не з файлів телефона.'})}
@@ -161,14 +182,14 @@ const wi=c=>W[c]||['·','—'];
 const r=n=>Math.round(n);
 let place=JSON.parse(localStorage.getItem('place')||'null')||{name:'Львів',country:'Україна',lat:49.8397,lon:24.0297};
 let kwp=Number(localStorage.getItem('kwp'))||100;
-let D=null,tab='h';
+let D=null,tab=(['h','d','k'].includes(localStorage.getItem('tab'))?localStorage.getItem('tab'):'h');
 
 async function load(){
   AQ=null;
   $('now').innerHTML='<div class="city">'+place.name+'</div><div class="desc" style="margin-top:20px">Завантаження…</div>';
   const u='https://api.open-meteo.com/v1/forecast?latitude='+place.lat+'&longitude='+place.lon
    +'&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day'
-   +'&hourly=temperature_2m,precipitation_probability,weather_code,shortwave_radiation,apparent_temperature,wind_speed_10m,relative_humidity_2m,uv_index,wind_gusts_10m'
+   +'&hourly=temperature_2m,precipitation_probability,weather_code,shortwave_radiation,apparent_temperature,wind_speed_10m,relative_humidity_2m,uv_index,wind_gusts_10m,pressure_msl'
    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,shortwave_radiation_sum,sunrise,sunset'
    +'&wind_speed_unit=ms&timezone=auto&forecast_days=7';
   try{
@@ -199,9 +220,9 @@ function view(){
   document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===tab));
   if(!D) return;
   $('v').className=tab==='k'?'narrow':'';
-  $('v').innerHTML=tab==='h'?vHours():tab==='d'?vDays():tab==='k'?vKids():'<div class="glass">'+vSolar()+'</div>';
+  $('v').innerHTML=tab==='h'?vHours():tab==='d'?vDays():tab==='k'?vAdvice():'<div class="glass">'+vSolar()+'</div>';
   if(tab==='h') scrub();
-  if(tab==='k') kidsInit();
+  if(tab==='k') advInit();
   if(tab==='d') daysInit();
   const k=$('kwp'); if(k) k.oninput=()=>{kwp=Math.max(0,Number(k.value)||0);localStorage.setItem('kwp',kwp);$('v').innerHTML='<div class="glass">'+vSolar()+'</div>';$('kwp').focus();const e=$('kwp');e.setSelectionRange(e.value.length,e.value.length)};
 }
@@ -276,7 +297,7 @@ async function extras(){
     AQ={aqi:a};
     const m=document.querySelector('.meta');
     if(m) m.insertAdjacentHTML('beforeend','<span><i class="dot" style="background:'+L[1]+'"></i>Повітря: '+L[0]+' ('+a+')</span>');
-    if(tab==='k'&&$('kr')) kidsFill();
+    if(tab==='k'&&$('kr')) advFill();
   }catch(e){}
 }
 async function fetchBand(){
@@ -455,51 +476,182 @@ const LV=[
  {v:'Мороз',e:'❄️',s:'Зимовий комбінезон і термобілизна',l:4,it:[['🧶','Голова','Шапка-шолом і шарф'],['🧥','Верх','Термобілизна + фліс + комбінезон'],['🧤','Руки','Теплі рукавиці'],['🥾','Ноги','Зимове взуття, вовняні шкарпетки']]},
  {v:'Сильний мороз',e:'🧊',s:'Максимум тепла, прогулянка коротша',l:4,it:[['🧣','Голова','Шапка-шолом, шарф до очей'],['🧥','Верх','Термобілизна + фліс + комбінезон'],['🧤','Руки','Теплі рукавиці'],['🥾','Ноги','Зимове взуття, вовняні шкарпетки'],['🧴','Обличчя','Захисний крем для щік і носа']]}
 ];
-let age=localStorage.getItem('age')!==null?+localStorage.getItem('age'):1,csel=0;
+const PETS=[['Мала або короткошерста','чутлива до холоду',-4],['Середня','звичайна шерсть',3],['Велика, густа шерсть','добре переносить холод',14]];
+const FISH=[['З берега','літня'],['З човна','на воді'],['Зимова','з льоду']];
+const CATS=[['kids','👶','Одяг','для дітей'],['pets','🐕','Тварини','одяг і прогулянка'],['auto','🚗','Авто','нагадування за погодою'],['fish','🎣','Рибалка','куртка й палатка']];
+const NOTES={kids:'Це загальні орієнтири за відчутною температурою. Усі діти різні, тож орієнтуйтеся на самопочуття малюка й поради педіатра.',
+ pets:'Орієнтири для собак за відчутною температурою. Цуценята, літні та хворі тварини чутливіші: за сумнівів запитайте ветеринара.',
+ auto:'Нагадування спираються на прогноз найближчих 7 днів і загальні практичні правила. Для точних строків дивіться рекомендації виробника авто.',
+ fish:'Оцінка клювання лише орієнтир за тиском, вітром і опадами, а не гарантія. Перевіряйте безпеку: гроза, вітер і товщина льоду.'};
+let age=localStorage.getItem('age')!==null?+localStorage.getItem('age'):1,csel=0,cat=localStorage.getItem('cat')||'',petSz=+localStorage.getItem('petSz')||0,fishM=+localStorage.getItem('fishM')||0;
+const cc=()=>cat||'kids';
 function skyFor(j){
   const h=D.hourly,dt=h.time[j],dk=D.daily.time.indexOf(dt.slice(0,10)),hr=+dt.slice(11,13);
   const sr=dk<0?7:clock(D.daily.sunrise[dk].slice(11)),ss=dk<0?19:clock(D.daily.sunset[dk].slice(11));
   document.body.className=skyCls(h.weather_code[j],hr<sr||hr>ss,Math.abs(hr-sr)<=1||Math.abs(hr-ss)<=1).trim();
 }
-function vKids(){
-  return '<div class="glass"><div class="hint">Для кого збираємось</div><div class="chips" id="ac">'
-   +AGES.map((a,i)=>'<button data-i="'+i+'" aria-pressed="'+(i===age)+'">'+a[0]+'<small>'+a[1]+'</small></button>').join('')+'</div>'
-   +'<div class="hint" style="margin-top:14px">Коли гуляємо</div><div class="tm"><b id="kt"></b><span id="kf"></span></div>'
-   +'<input type="range" id="ks" min="0" max="23" value="'+csel+'" aria-label="Година прогулянки"></div>'
-   +'<div id="kr"></div>'
-   +'<div class="note">Це загальні орієнтири за відчутною температурою. Усі діти різні, тож орієнтуйтеся на самопочуття малюка й поради педіатра.</div>';
+function subHtml(){
+  const k=cc();if(k==='auto')return '';
+  const A=k==='kids'?AGES:k==='pets'?PETS:FISH,v=k==='kids'?age:k==='pets'?petSz:fishM;
+  return '<div class="hint" style="margin-top:14px">'+(k==='kids'?'Для кого збираємось':k==='pets'?'Яка собака':'Який вид ловлі')+'</div><div class="chips" id="ac">'
+    +A.map((a,i)=>'<button data-i="'+i+'" aria-pressed="'+(i===v)+'">'+a[0]+'<small>'+a[1]+'</small></button>').join('')+'</div>';
 }
-function kidsFill(){
-  const h=D.hourly,j=nowIdx()+csel,dt=h.time[j],today=D.current.time.slice(0,10);
-  const feel=h.apparent_temperature[j],wind=h.wind_speed_10m[j],pop=h.precipitation_probability[j]||0,code=h.weather_code[j],uv=(h.uv_index&&h.uv_index[j])||0;
-  const eff=feel+AGES[age][2],li=eff>=27?0:eff>=22?1:eff>=16?2:eff>=10?3:eff>=5?4:eff>=-1?5:eff>=-7?6:7,L=LV[li];
-  const rain=pop>=40||(code>=51&&code<=67)||(code>=80&&code<=82)||code>=95,snow=(code>=71&&code<=77)||code===85||code===86;
-  const items=L.it.slice();
-  if(rain&&!snow) items.push(['☔','Дощ','Дощовик і гумові чоботи']);
-  if(snow) items.push(['❄️','Сніг','Непромокальний верх і взуття']);
-  const tips=[];
+function vAdvice(){
+  if(!cat) setTimeout(openCat,60);
+  const c=CATS.find(x=>x[0]===cc());
+  return '<div class="glass"><button class="cbtn" id="cbtn" aria-haspopup="dialog"><span class="ce">'+c[1]+'</span><span><small>Категорія</small><b>'+c[2]+', '+c[3]+'</b></span><span class="chv">змінити ▾</span></button>'+subHtml()
+   +(cc()==='auto'?'':'<div class="hint" style="margin-top:14px">Коли</div><div class="tm"><b id="kt"></b><span id="kf"></span></div><input type="range" id="ks" min="0" max="23" value="'+csel+'" aria-label="Година">')
+   +'</div><div id="kr"></div><div class="note" id="kn"></div>';
+}
+function ctx(){
+  const h=D.hourly,j=nowIdx()+csel,c=h.weather_code[j],p=h.precipitation_probability[j]||0;
+  return {h,j,dt:h.time[j],feel:h.apparent_temperature[j],temp:h.temperature_2m[j],wind:h.wind_speed_10m[j],gust:(h.wind_gusts_10m&&h.wind_gusts_10m[j])||0,pop:p,code:c,uv:(h.uv_index&&h.uv_index[j])||0,
+    rain:p>=40||(c>=51&&c<=67)||(c>=80&&c<=82)||c>=95,snow:(c>=71&&c<=77)||c===85||c===86};
+}
+function resHtml(e,v,s,items,st,tips){
+  return '<div class="glass" style="margin-top:12px"><div class="kv"><span class="ke">'+e+'</span><div><b>'+v+'</b><span>'+s+'</span></div></div>'
+   +'<div class="ki">'+items.map(i=>'<div><span class="ie">'+i[0]+'</span><span><small>'+i[1]+'</small><b>'+i[2]+'</b></span></div>').join('')+'</div>'+(st?'<div class="st">'+st+'</div>':'')+'</div>'
+   +(tips.length?'<div class="glass" style="margin-top:12px">'+tips.map(t=>'<div class="tp"><span>'+t[0]+'</span><span>'+t[1]+'</span></div>').join('')+'</div>':'');
+}
+function kidsHtml(x){
+  const eff=x.feel+AGES[age][2],li=eff>=27?0:eff>=22?1:eff>=16?2:eff>=10?3:eff>=5?4:eff>=-1?5:eff>=-7?6:7,L=LV[li],items=L.it.slice(),tips=[];
+  if(x.rain&&!x.snow) items.push(['☔','Дощ','Дощовик і гумові чоботи']);
+  if(x.snow) items.push(['❄️','Сніг','Непромокальний верх і взуття']);
   if(age===0&&li>=4) tips.push(['🛏️','У колясці додайте ковдру: дитина мало рухається й швидко мерзне.']);
   if(li>=6) tips.push(['⏱️','Сильний холод: прогулянку краще скоротити й частіше перевіряти щічки та носик.']);
-  if(wind>=8) tips.push(['💨','Вітряно: потрібна вітрозахисна куртка й шапка, що закриває вуха.']);
-  if(uv>=3) tips.push(['🕶️',age===0?'УФ-індекс '+Math.round(uv)+': немовлят краще тримати в тіні, без прямого сонця.':'УФ-індекс '+Math.round(uv)+': головний убір і сонцезахисний крем.']);
+  if(x.wind>=8) tips.push(['💨','Вітряно: потрібна вітрозахисна куртка й шапка, що закриває вуха.']);
+  if(x.uv>=3) tips.push(['🕶️',age===0?'УФ-індекс '+Math.round(x.uv)+': немовлят краще тримати в тіні, без прямого сонця.':'УФ-індекс '+Math.round(x.uv)+': головний убір і сонцезахисний крем.']);
   if(eff>=24) tips.push(['💧','Спекотно: пийте воду частіше й не залишайте дитину під сонцем у закритому авто чи колясці.']);
   if(L.l>=2) tips.push(['🧅','Одягайте шарами ('+L.l+'): базовий, утеплювач і верхній. Так легко зняти зайве, коли дитина зігрілась.']);
   if(AQ&&AQ.aqi>=60) tips.push(['😷','Повітря забруднене (індекс '+AQ.aqi+'): прогулянку краще скоротити й обрати парк замість жвавої дороги.']);
   tips.push(['🤚','Перевірте шийку чи спинку: тепла й суха означає, що все гаразд; спітніла означає, що слід зняти шар; холодна означає, що слід додати.']);
-  $('kt').textContent=(dt.slice(0,10)===today?'Сьогодні':'Завтра')+', '+dt.slice(11);
-  $('kf').textContent='відчувається як '+r(feel)+'°';
-  $('kr').innerHTML='<div class="glass" style="margin-top:12px"><div class="kv"><span class="ke">'+L.e+'</span><div><b>'+L.v+'</b><span>'+L.s+'</span></div></div>'
-   +'<div class="ki">'+items.map(x=>'<div><span class="ie">'+x[0]+'</span><span><small>'+x[1]+'</small><b>'+x[2]+'</b></span></div>').join('')+'</div>'
-   +'<div class="st"><span>💨 '+r(wind)+' м/с</span><span>☔ '+pop+'%</span><span>🧅 шарів: '+L.l+'</span>'+(uv>=1?'<span>🕶️ УФ '+Math.round(uv)+'</span>':'')+'</div></div>'
-   +'<div class="glass" style="margin-top:12px">'+tips.map(x=>'<div class="tp"><span>'+x[0]+'</span><span>'+x[1]+'</span></div>').join('')+'</div>';
-  skyFor(j);
+  return resHtml(L.e,L.v,L.s,items,'<span>💨 '+r(x.wind)+' м/с</span><span>☔ '+x.pop+'%</span><span>🧅 шарів: '+L.l+'</span>'+(x.uv>=1?'<span>🕶️ УФ '+Math.round(x.uv)+'</span>':''),tips);
 }
-function kidsInit(){
-  document.querySelectorAll('#ac button').forEach(b=>b.onclick=()=>{age=+b.dataset.i;localStorage.setItem('age',age);
-    document.querySelectorAll('#ac button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.i===age));kidsFill()});
-  $('ks').oninput=e=>{csel=+e.target.value;kidsFill()};
-  kidsFill();
+const PL=[
+ ['🥵','Спекотно','Захист від перегріву',[['💧','Вода','Воду й миску беріть із собою'],['🌳','Час','Гуляйте зранку чи ввечері'],['🐾','Асфальт','Притисніть долоню на 7 секунд: гаряче означає біль для лап'],['🚗','Авто','Не залишайте у закритій машині']]],
+ ['🐕','Комфортно','Одяг не потрібен',[['🐕','Одяг','Не потрібен'],['🦺','Безпека','Світловідбивач чи ліхтарик у сутінках'],['💧','Вода','Миска води для прогулянки']]],
+ ['🧥','Прохолодно','Легка жилетка або светр',[['🧥','Одяг','Легка жилетка або светр'],['🐾','Лапи','Після прогулянки протріть лапи й живіт']]],
+ ['🧣','Холодно','Тепла курточка',[['🧥','Одяг','Тепла курточка'],['🐾','Лапи','Захисний віск для подушечок'],['⏱️','Прогулянка','Не довше 20–30 хвилин']]],
+ ['🥶','Дуже холодно','Утеплений комбінезон і захист лап',[['🧥','Одяг','Утеплений комбінезон'],['🥾','Лапи','Черевички або віск'],['⏱️','Прогулянка','Короткі виходи по 10–20 хвилин'],['🧂','Реагенти','Після вулиці вимийте лапи теплою водою']]],
+ ['🧊','Мороз','Мінімум часу надворі',[['🧥','Одяг','Утеплений комбінезон, закриті шия й живіт'],['🥾','Лапи','Черевички обов’язково'],['⏱️','Прогулянка','Лише за потреби, 5–15 хвилин'],['🏠','Дім','Одразу в тепло, витерти й обігріти']]]
+];
+function petsHtml(x){
+  const eff=x.feel+PETS[petSz][2],li=x.feel>=26?0:eff>=12?1:eff>=5?2:eff>=-2?3:eff>=-9?4:5,L=PL[li],items=L[3].slice(),tips=[];
+  if(x.rain&&!x.snow) items.push(['☔','Дощ','Дощовик, потім витріть шерсть']);
+  if(x.snow) items.push(['❄️','Сніг','Непромокальний одяг, віск на лапи']);
+  if(x.wind>=8) tips.push(['💨','Вітряно: короткошерстим і малим собакам потрібен вітрозахисний одяг.']);
+  if(x.feel>=26) tips.push(['💧','Спека: частіше давайте воду, уникайте полудня, стежте за диханням і ознаками перегріву.']);
+  tips.push(['🩺','Цуценята, літні й хворі тварини чутливіші до холоду та спеки. За сумнівів порадьтеся з ветеринаром.']);
+  return resHtml(L[0],L[1],L[2],items,'<span>🌡️ відч. '+r(x.feel)+'°</span><span>💨 '+r(x.wind)+' м/с</span><span>☔ '+x.pop+'%</span>',tips);
 }
+function fishHtml(x){
+  const h=x.h,j=x.j,P=h.pressure_msl,winter=fishM===2,boat=fishM===1;
+  let sc=50;const why=[];
+  if(P&&P[j]!=null){
+    const d=P[j]-P[Math.max(0,j-6)];
+    if(Math.abs(d)<=1.5){sc+=15;why.push('тиск стабільний')}else if(d>=4){sc-=15;why.push('тиск різко росте')}else if(d>0){sc+=5;why.push('тиск повільно росте')}else if(d<=-4){sc-=25;why.push('тиск різко падає')}else{sc-=5;why.push('тиск повільно падає')}
+    if(P[j]<1000){sc-=10;why.push('низький тиск')}
+  }
+  if(x.wind<1) why.push('штиль'); else if(x.wind<=5){sc+=15;why.push('легкий вітер')} else if(x.wind<8){sc-=5;why.push('помірний вітер')} else {sc-=25;why.push('сильний вітер')}
+  if(x.pop>=70){sc-=10;why.push('дощ')}
+  if(x.code>=95) sc=Math.min(sc,10);
+  sc=Math.max(5,Math.min(95,Math.round(sc)));
+  const lv=sc>=65?['🎣','Клювання: ймовірно хороше']:sc>=40?['🙂','Клювання: помірне']:['😕','Клювання: слабке'];
+  const f=x.feel;let jacket;
+  if(winter) jacket=f>=0?'Зимовий костюм або тепла куртка + термобілизна':f>=-10?'Зимовий костюм із мембраною + термобілизна + фліс':'Термокостюм, термобілизна, шапка-шолом, термочоботи';
+  else jacket=f>=24?'Легка дихаюча сорочка з UV-захистом і кепка':f>=17?'Легка вітровка або софтшелл':f>=10?'Куртка з мембраною + фліс':f>=3?'Утеплена куртка + термобілизна':'Тепла мембранна куртка + термобілизна + шапка';
+  const items=[['🧥','Куртка',jacket]];
+  items.push(['🥾','Взуття',winter?'Термочоботи з утеплювачем':x.rain||f<8?'Забродні або водонепроникні чоботи':'Зручне закрите взуття']);
+  if(x.rain||x.snow) items.push(['☔','Від вологи','Мембрана 10 000 мм і більше, непромокальні штани']);
+  if(f<3) items.push(['🧤','Руки','Теплі рукавиці або рукавички без пальців, грілка']);
+  if(boat) items.push(['🦺','Безпека','Рятувальний жилет обов’язково']);
+  let tent,tentSub='';
+  if(x.code>=95){tent='Гроза: риболовлю краще скасувати. Перечекайте подалі від води й високих дерев.'}
+  else if(x.wind>=12||x.gust>=18){tent='Сильний вітер: потрібна штормова палатка з розтяжками, або перенесіть риболовлю'+(boat?'. На воду не виходьте.':'.')}
+  else if(winter){tent=f<-10?'Зимова палатка-куб з вітрозахистом і утепленням, обов’язково з вентиляцією при будь-якому обігріві':'Зимова палатка-куб, що береже від вітру й снігу'}
+  else if(x.wind>=8){tent='Палатка з розтяжками, оберіть підвітряний берег'}
+  else if(x.rain){tent='Палатка-шатро або парасоля-намет із навісом; тримайте спорядження сухим'}
+  else if(x.uv>=6||f>=26){tent='Тент або парасоля від сонця'}
+  else tent='Палатка не потрібна: вистачить парасолі-тенту або складного крісла';
+  items.push(['⛺','Палатка',tent]);
+  const tips=[];
+  if(winter) tips.push(['🧊','Перевіряйте товщину льоду: для однієї людини безпечним зазвичай вважають чистий міцний лід від близько 10 см. Під час відлиги лід слабшає. Прогноз товщину льоду не показує.']);
+  if(boat&&x.wind>=8) tips.push(['🌊','Вітер понад 8 м/с на воді небезпечний: краще залишитися на березі.']);
+  tips.push(['🎯','Оцінка '+sc+' зі 100 за факторами: '+why.join(', ')+'.']);
+  return resHtml(lv[0],lv[1],why.join(', '),items,'<span>🌡️ відч. '+r(f)+'°</span><span>💨 '+r(x.wind)+' м/с</span>'+(P?'<span>⏲ '+Math.round(P[j])+' гПа</span>':'')+'<span>☔ '+x.pop+'%</span>',tips);
+}
+function autoHtml(){
+  const d=D.daily,n=Math.min(7,d.time.length),mn=d.temperature_2m_min.slice(0,n),mx=d.temperature_2m_max.slice(0,n);
+  const mean=mn.map((v,i)=>(v+mx[i])/2),k5=Math.min(5,n),avg5=mean.slice(0,k5).reduce((a,b)=>a+b,0)/k5;
+  const min3=Math.min(...mn.slice(0,3)),minAll=Math.min(...mn),maxAll=Math.max(...mx),month=+D.current.time.slice(5,7);
+  const h=D.hourly,i0=nowIdx(),codes=h.weather_code.slice(i0,i0+48),T=h.temperature_2m.slice(i0,i0+36);
+  const snow=codes.some(c=>(c>=71&&c<=77)||c===85||c===86),rain=codes.some(c=>c>=51&&c<=82);
+  const icy=T.some((t,i)=>t<=1&&t>=-4&&((h.precipitation_probability[i0+i]||0)>=40||[56,57,66,67].includes(h.weather_code[i0+i])));
+  const IT=[],add=(id,e,t,s,ds)=>IT.push({id,e,t,s,ds});
+  if(avg5<=7||min3<=3) add('tires','🛞','Зимові шини','now','Середня температура близько '+r(avg5)+'°, вночі до '+r(min3)+'°. Час переходити на зимову гуму.');
+  else if(month>=3&&month<=5&&avg5>=10&&min3>=5) add('tires','🛞','Літні шини','now','Стабільно тепло: середня близько '+r(avg5)+'°. Можна міняти на літню гуму.');
+  else if((month>=9&&month<=11&&avg5<=11)||(month>=3&&month<=4&&avg5>=8)) add('tires','🛞','Шини','soon','Скоро переобування: середня близько '+r(avg5)+'°. Запишіться на шиномонтаж заздалегідь.');
+  else add('tires','🛞','Шини','ok','Поки не потрібно міняти (середня близько '+r(avg5)+'°).');
+  if(minAll<=0) add('washer','💧','Зимовий омивач','now','Мінімум прогнозу '+r(minAll)+'°. Залийте незамерзайку '+(minAll<=-15?'до −30°C':'до −20°C')+'.');
+  else if(minAll<=4) add('washer','💧','Зимовий омивач','soon','Скоро заморозки (до '+r(minAll)+'°). Підготуйте незамерзайку.');
+  else add('washer','💧','Омивач','ok','Літній омивач ще підходить.');
+  if(min3<=-5) add('battery','🔋','Акумулятор','now','Перед морозами перевірте заряд і клеми.');
+  else if(min3<=0) add('battery','🔋','Акумулятор','soon','Холод підвищує навантаження: перевірте заряд.');
+  else add('battery','🔋','Акумулятор','ok','Без особливих ризиків.');
+  if(minAll<=0) add('press','🛞','Тиск у шинах','soon','При похолоданні тиск падає: перевірте манометром.');
+  if(icy) add('ice','🧊','Ожеледиця','now','Ймовірна ожеледиця: збільште дистанцію, гальмуйте й рушайте плавно.');
+  if(snow) add('snow','❄️','Сніг','now','Щітка й скребок у машині, очистіть дах і фари перед поїздкою.');
+  else if(minAll<=0) add('snow','❄️','Скребок і щітка','soon','Тримайте в машині на випадок снігу чи паморозі.');
+  if(rain||snow) add('wipers','🧽','Склоочисники','soon','Якщо щітки лишають смуги, час їх замінити.');
+  if(minAll<=-8) add('coolant','🌡️','Антифриз','now','Перевірте щільність охолоджувальної рідини.');
+  else if(minAll<=-3) add('coolant','🌡️','Антифриз','soon','Перед сильними морозами перевірте щільність.');
+  if(min3<=-3) add('locks','🔑','Замки й ущільнювачі','soon','Силіконове мастило для гумок, розморожувач для замків.');
+  if(maxAll>=30) add('heat','☀️','Спека','now','Кондиціонер і тиск у шинах; не залишайте дітей і тварин у машині.');
+  const ord={now:0,soon:1,ok:2};IT.sort((a,b)=>ord[a.s]-ord[b.s]);
+  const done=JSON.parse(localStorage.getItem('autoDone')||'{}'),lab={now:'Зараз',soon:'Скоро',ok:'Не потрібно'};
+  return '<div class="glass" style="margin-top:12px"><div class="kv"><span class="ke">🚗</span><div><b>Авто на 7 днів</b><span>від '+r(minAll)+'° до '+r(maxAll)+'°, середня близько '+r(avg5)+'°</span></div></div>'
+   +IT.map(i=>'<label class="ar'+(done[i.id]?' done':'')+'"><input type="checkbox" data-id="'+i.id+'"'+(done[i.id]?' checked':'')+'><span class="ae">'+i.e+'</span><span class="at"><b>'+i.t+'</b><small>'+i.ds+'</small></span><span class="sp s-'+i.s+'">'+lab[i.s]+'</span></label>').join('')
+   +'<button class="rs" id="rs">Скинути відмітки</button></div>';
+}
+function advFill(){
+  const k=cc();let html;
+  if(k==='auto'){html=autoHtml();document.body.className=skyCls(D.current.weather_code,!D.current.is_day,false).trim()}
+  else{
+    const x=ctx();$('kt').textContent=(x.dt.slice(0,10)===D.current.time.slice(0,10)?'Сьогодні':'Завтра')+', '+x.dt.slice(11);$('kf').textContent='відчувається як '+r(x.feel)+'°';
+    html=k==='kids'?kidsHtml(x):k==='pets'?petsHtml(x):fishHtml(x);skyFor(x.j);
+  }
+  $('kr').innerHTML=html;$('kn').textContent=NOTES[k];
+  if(k==='auto'){
+    $('kr').querySelectorAll('.ar input').forEach(c=>c.onchange=()=>{const o=JSON.parse(localStorage.getItem('autoDone')||'{}');o[c.dataset.id]=c.checked;localStorage.setItem('autoDone',JSON.stringify(o));c.closest('.ar').classList.toggle('done',c.checked)});
+    const rs=$('rs');if(rs)rs.onclick=()=>{localStorage.removeItem('autoDone');advFill()};
+  }
+}
+function advInit(){
+  $('cbtn').onclick=openCat;
+  const ac=$('ac');
+  if(ac) ac.onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i,k=cc();
+    if(k==='kids'){age=i;localStorage.setItem('age',i)}else if(k==='pets'){petSz=i;localStorage.setItem('petSz',i)}else{fishM=i;localStorage.setItem('fishM',i)}
+    ac.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b));advFill()};
+  const ks=$('ks');if(ks) ks.oninput=e=>{csel=+e.target.value;advFill()};
+  advFill();
+}
+function openCat(){
+  const m=$('md');
+  m.innerHTML='<div class="mdb" role="dialog" aria-modal="true" aria-labelledby="mdt"><h3 id="mdt">Що вас цікавить?</h3><div class="mg">'
+   +CATS.map(c=>'<button class="mc" data-c="'+c[0]+'" aria-pressed="'+(!!cat&&c[0]===cat)+'"><span class="mce">'+c[1]+'</span><b>'+c[2]+'</b><small>'+c[3]+'</small></button>').join('')
+   +'</div><button class="mx" id="mx">Закрити</button></div>';
+  m.classList.add('on');m.setAttribute('aria-hidden','false');m.querySelector('.mc').focus();
+}
+function closeCat(){
+  const m=$('md');m.classList.remove('on');m.setAttribute('aria-hidden','true');
+  if(!cat){cat='kids';localStorage.setItem('cat',cat);if(tab==='k')view()}
+}
+$('md').addEventListener('click',e=>{
+  const c=e.target.closest('.mc');
+  if(c){cat=c.dataset.c;localStorage.setItem('cat',cat);closeCat();if(tab==='k')view();return}
+  if(e.target===$('md')||e.target.id==='mx')closeCat();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('md').classList.contains('on'))closeCat()});
 
 function vSolar(){
   const h=D.hourly,i0=nowIdx(),day=D.current.time.slice(0,10),PR=.8;
@@ -543,7 +695,7 @@ $('geo').onclick=()=>{
   if(!navigator.geolocation){alert('Браузер не дає доступу до геолокації.');return}
   navigator.geolocation.getCurrentPosition(p=>{place={name:'Моя локація',country:'',lat:p.coords.latitude,lon:p.coords.longitude};load()},()=>alert('Немає дозволу на геолокацію. Введіть місто вручну.'));
 };
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;view()});
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;localStorage.setItem('tab',tab);view()});
 load();
 if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
