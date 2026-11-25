@@ -20,11 +20,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 button,.grid>div{touch-action:manipulation}
 #fail{display:none;margin:12px 18px;padding:12px 14px;border-radius:14px;background:rgba(0,0,0,.35);font-size:13px;line-height:1.5;word-break:break-word}
 @media (max-width:480px){.temp{font-size:78px}.rt{font-size:40px}.rx b{font-size:24px}}
-body{font-family:"Avenir Next","Segoe UI Variable","Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(175deg,var(--sky1),var(--sky2)) fixed;color:#fff;min-height:100vh;transition:--sky1 .6s,--sky2 .6s}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI Variable","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:linear-gradient(175deg,var(--sky1),var(--sky2)) fixed;color:#fff;min-height:100vh;transition:--sky1 .6s,--sky2 .6s}
 body.dusk{--sky1:#6d4789;--sky2:#f0a070}body.night{--sky1:#0f1a3a;--sky2:#34457a}body.cloud{--sky1:#55657a;--sky2:#8d9db0}body.rain{--sky1:#2b4059;--sky2:#5f7b99}
 .hero{padding:calc(14px + env(safe-area-inset-top)) 18px 10px}
-.glass{background:rgba(255,255,255,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.22);border-radius:24px;padding:16px 16px 12px;box-shadow:0 10px 40px rgba(10,30,70,.18)}
-.hint{font-size:12.5px;color:var(--mut);margin-bottom:6px}
+.glass{background:rgba(255,255,255,.13);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:16px 16px 12px;box-shadow:0 6px 24px rgba(10,30,70,.12)}
+.hint{font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
 .top{display:flex;gap:8px;max-width:1000px;margin:0 auto 22px;position:relative}
 .top input{flex:1;min-width:0;border:0;border-radius:12px;padding:12px 14px;font:inherit;font-size:16px;background:rgba(255,255,255,.22);color:#fff;outline-offset:2px}
 .top input::placeholder{color:rgba(255,255,255,.8)}
@@ -40,12 +40,12 @@ body.dusk{--sky1:#6d4789;--sky2:#f0a070}body.night{--sky1:#0f1a3a;--sky2:#34457a
 main{max-width:1000px;margin:0 auto;padding:6px 18px calc(30px + env(safe-area-inset-bottom))}
 nav{display:flex;gap:22px;border-bottom:1px solid var(--line);margin:0 0 18px;position:sticky;top:0;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);z-index:4}
 nav button{font:inherit;font-size:16px;background:none;border:0;color:var(--mut);padding:14px 0 11px;border-bottom:3px solid transparent;cursor:pointer}
-nav button[aria-selected=true]{color:var(--ink);font-weight:600;border-color:var(--sun)}
+nav button[aria-selected=true]{color:var(--ink);font-weight:600;border-color:#fff}
 h2{font-size:15px;font-weight:600;margin:22px 0 8px;color:var(--mut)}
 .narrow{max-width:560px}
 .rd{display:flex;align-items:center;gap:14px;margin:4px 0 8px;min-height:66px}
 .re{font-size:38px}.rt{font-size:46px;font-weight:200;letter-spacing:-1px}
-.rx{font-size:14px;color:var(--mut);line-height:1.45}.rx b{display:block;color:var(--ink);font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:27px;font-weight:600;line-height:1.1}.rx b em{font-style:normal;font-weight:400;color:var(--sun);margin-left:10px}.rx .dt{display:block;font-size:13px;margin:3px 0 5px;text-transform:capitalize}
+.rx{font-size:14px;color:var(--mut);line-height:1.45}.rx b{display:block;color:var(--ink);font-size:27px;font-weight:600;line-height:1.1}.rx b em{font-style:normal;font-weight:400;color:var(--mut);margin-left:10px}.rx .dt{display:block;font-size:13px;margin:3px 0 5px}
 #ch{touch-action:pan-y;cursor:ew-resize;outline-offset:4px;user-select:none}
 .ring{transform-box:fill-box;transform-origin:center;animation:pl 1.9s ease-out infinite}
 @keyframes pl{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.1);opacity:0}}
@@ -62,25 +62,25 @@ h2{font-size:15px;font-weight:600;margin:22px 0 8px;color:var(--mut)}
 .dc .dn{display:block;font-size:20px;font-weight:600}
 .dc .e{font-size:26px;display:block;margin:6px 0}
 .pb{display:block;width:8px;height:34px;margin:0 auto;border-radius:4px;background:rgba(255,255,255,.18);position:relative;overflow:hidden}
-.pb i{position:absolute;bottom:0;left:0;right:0;border-radius:4px;background:linear-gradient(0deg,#4df3ff,#8a7bff);box-shadow:0 0 8px #4df3ff}
+.pb i{position:absolute;bottom:0;left:0;right:0;border-radius:4px;background:#4aa8ff;box-shadow:none}
 .dc .pm{display:block;font-size:11px;color:var(--mut);margin-top:4px}
 #dch{touch-action:pan-y;cursor:pointer}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chips button{font:inherit;font-size:14px;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:8px 12px;cursor:pointer;text-align:left;line-height:1.25}
 .chips small{display:block;color:var(--mut);font-size:11px}
-.chips button[aria-pressed=true]{background:rgba(255,255,255,.3);border-color:#ffd36e;box-shadow:0 0 14px rgba(255,211,110,.35)}
+.chips button[aria-pressed=true]{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.9)}
 .tm{display:flex;justify-content:space-between;align-items:baseline;margin:2px 0 4px}
-.tm b{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:22px}.tm span{font-size:13px;color:var(--mut)}
-input[type=range]{width:100%;accent-color:#ffd36e;height:30px}
+.tm b{font-size:22px}.tm span{font-size:13px;color:var(--mut)}
+input[type=range]{width:100%;accent-color:#fff;height:30px}
 .kv{display:flex;gap:14px;align-items:center;margin-bottom:12px}.kv .ke{font-size:56px;line-height:1;color:inherit}
-.kv b{display:block;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:25px}.kv span{color:var(--mut);font-size:14px}
+.kv b{display:block;font-size:25px}.kv span{color:var(--mut);font-size:14px}
 .ki{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .ki>div{background:rgba(255,255,255,.12);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center}
 .ie{font-size:28px}.ki small{display:block;color:var(--mut);font-size:11px}.ki b{font-size:14px;font-weight:600;line-height:1.3}
 .st{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.st span{background:rgba(255,255,255,.14);border-radius:12px;padding:5px 10px;font-size:13px}
 .tp{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.4}.tp:first-child{border:0}
 .pill{display:inline-flex;gap:8px;align-items:center;margin-top:12px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:14px;border:1px solid rgba(255,255,255,.28)}
-.pill.rain{box-shadow:0 0 18px rgba(77,243,255,.45);border-color:rgba(77,243,255,.6)}
+.pill.rain{border-color:rgba(255,255,255,.55)}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px}
 .fl{animation:fl 3.2s ease-in-out infinite}@keyframes fl{0%,100%{transform:translateX(-1.3px)}50%{transform:translateX(1.3px)}}
 .pu{transform-box:fill-box;transform-origin:center;animation:pu 2.4s ease-in-out infinite}@keyframes pu{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
@@ -95,13 +95,13 @@ input[type=range]{width:100%;accent-color:#ffd36e;height:30px}
 .dwrap>.dgrid,.dwrap>svg{position:relative}
 .dc.on{background:none}
 .dc{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
-.dc .tdl{font-size:9.5px;color:var(--sun);line-height:1;margin-top:1px}
+.dc .tdl{font-size:9.5px;color:rgba(255,255,255,.85);line-height:1;margin-top:1px}
 .di{width:36px;height:36px;margin:4px 0}
 .ds{font-size:11px;color:var(--mut);margin-bottom:4px}
 .dh1{font-size:17px}.dl{font-size:13px;color:var(--mut);margin-bottom:6px}
 @media (min-width:700px){.di{width:48px;height:48px}.ds{font-size:13px}.dh1{font-size:20px}}
 .rt small{font-size:24px;color:var(--mut);margin-left:2px}.ri{width:62px;height:62px;flex:none}
-.tg{font-family:-apple-system,"Segoe UI",sans-serif;font-style:normal;font-size:11px;font-weight:600;background:#ffd36e;color:#3a2a00;border-radius:8px;padding:2px 7px;margin-left:10px;vertical-align:middle}
+.tg{font-style:normal;font-size:11px;font-weight:600;background:rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:2px 7px;margin-left:10px;vertical-align:middle}
 .rx .ds2{display:block;font-size:17px;color:var(--ink);margin:2px 0}
 @media (max-width:480px){
 .glass{padding:14px 12px 10px;border-radius:20px}
@@ -113,32 +113,36 @@ input[type=range]{width:100%;accent-color:#ffd36e;height:30px}
 #drd .ds2{font-size:16px}
 }
 .cbtn{display:flex;align-items:center;gap:12px;width:100%;font:inherit;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:18px;padding:10px 14px;cursor:pointer;text-align:left}
-.cbtn .ce{font-size:30px}.cbtn small{display:block;color:var(--mut);font-size:11px}.cbtn b{font-size:19px;font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif}.cbtn .chv{margin-left:auto;font-size:13px;color:var(--sun)}
+.cbtn .ce{font-size:30px}.cbtn small{display:block;color:var(--mut);font-size:11px}.cbtn b{font-size:19px}.cbtn .chv{margin-left:auto;flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.24);box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.chv svg{width:26px;height:26px;fill:#fff;transition:transform .5s cubic-bezier(.3,.8,.3,1);animation:spin1 1.4s cubic-bezier(.3,.8,.3,1) .4s 1}
+.cbtn:hover .chv svg,.cbtn:active .chv svg{transform:rotate(180deg)}
+@keyframes spin1{from{transform:rotate(-360deg)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.chv svg{animation:none}}
 .md{position:fixed;inset:0;background:rgba(5,15,35,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:flex-end;justify-content:center;z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
 .md.on{opacity:1;pointer-events:auto}
 .mdb{width:100%;max-width:520px;background:rgba(28,48,84,.94);border:1px solid rgba(255,255,255,.22);border-radius:26px 26px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .3s cubic-bezier(.3,.8,.3,1)}
 .md.on .mdb{transform:none}
 @media (min-width:700px){.md{align-items:center}.mdb{border-radius:26px}}
-.mdb h3{font-family:"Iowan Old Style","Palatino Linotype",Georgia,serif;font-size:24px;margin:0 4px 14px}
+.mdb h3{font-size:24px;margin:0 4px 14px}
 .mg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .mc{font:inherit;color:#fff;text-align:left;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
 .mc .mce{font-size:38px;line-height:1.1}.mc b{font-size:17px}.mc small{color:var(--mut);font-size:12px}
-.mc[aria-pressed=true]{border-color:#ffd36e;background:rgba(255,211,110,.16);box-shadow:0 0 16px rgba(255,211,110,.3)}
+.mc[aria-pressed=true]{border-color:rgba(255,255,255,.9);background:rgba(255,255,255,.22)}
 .mx{width:100%;margin-top:12px;font:inherit;color:var(--mut);background:none;border:0;padding:10px;cursor:pointer}
 .ar{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line);cursor:pointer}
-.ar input{accent-color:#ffd36e;width:20px;height:20px;margin-top:3px;flex:none}
+.ar input{accent-color:#fff;width:20px;height:20px;margin-top:3px;flex:none}
 .ar .ae{font-size:26px;line-height:1.1}.ar .at{flex:1;min-width:0}.ar .at b{display:block;font-size:15px}.ar .at small{display:block;color:var(--mut);font-size:13px;line-height:1.4;margin-top:2px}
 .sp{font-size:11px;font-weight:600;border-radius:8px;padding:3px 8px;white-space:nowrap}
 .s-now{background:#ff9a62;color:#331500}.s-soon{background:#ffd36e;color:#3a2a00}.s-ok{background:rgba(255,255,255,.18);color:var(--mut)}
 .ar.done{opacity:.5}.ar.done b{text-decoration:line-through}
 .rs{font:inherit;font-size:13px;color:var(--mut);background:none;border:0;margin-top:8px;cursor:pointer;text-decoration:underline}
 .halo{animation:halo 3.6s ease-in-out infinite}@keyframes halo{0%,100%{opacity:.14}60%{opacity:.42}}
-.grid{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;text-align:center;font-size:11px;color:var(--mut);margin-top:8px}
-@media (max-width:700px){.grid{grid-template-columns:repeat(12,1fr)}}
-.grid>div{padding:6px 0;border-radius:10px;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:8px 4px;text-align:center;font-size:12.5px;color:var(--mut);margin-top:10px}
+@media (max-width:700px){.grid{grid-template-columns:repeat(8,1fr)}}
+.grid>div{padding:9px 0;border-radius:10px;cursor:pointer}
 .grid>div.on{background:rgba(255,255,255,.24);color:var(--ink)}
-.grid b{display:block;font-size:12.5px;font-weight:600;color:var(--ink);margin-top:2px}
-.grid .e{font-size:18px;display:block;margin:3px 0}
+.grid b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-top:2px}
+.grid .e{font-size:23px;display:block;margin:6px 0}
 .day{display:grid;grid-template-columns:78px 30px 1fr 84px;align-items:center;gap:8px;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
 .day .rng{height:6px;border-radius:3px;background:var(--line);position:relative}
 .day .rng span{position:absolute;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#6aa9e8,var(--sun))}
@@ -243,6 +247,11 @@ function wxIcon(c,n){
   if(c===2) return (n?moonSvg('translate(-3 -3) scale(.8)'):sunSvg('translate(-4 -4) scale(.75)'))+cloudSvg('#b3c6e0','translate(2 3) scale(.85)');
   return n?moonSvg('translate(0 0)')+'<circle class="tw" cx="8" cy="-7" r="1.1" fill="#8c98e8"/><circle class="tw" style="animation-delay:.9s" cx="9.5" cy="3" r=".9" fill="#8c98e8"/>':sunSvg('translate(0 0)');
 }
+function cf(j){
+  const b=D.band&&D.band[j];if(!b)return '';
+  const sp=b[1]-b[0];
+  return '<br><span class="cf">🎯 '+(sp<=2?'Моделі збігаються, прогноз надійний':sp<=4?'Моделі трохи розходяться':'Моделі розходяться, прогноз менш певний')+'</span>';
+}
 function skyCls(code,night,dusk){return night?' night':code>=51?' rain':[3,45,48].includes(code)?' cloud':dusk?' dusk':''}
 function clock(x){const a=x.split(':');return +a[0]+ +a[1]/60}
 const p2=n=>(n<10?'0':'')+n;
@@ -346,9 +355,9 @@ let sel=0,G=null,dsel=0,DG=null,AQ=null;
 const cap=x=>x.charAt(0).toUpperCase()+x.slice(1);
 function vHours(){
   const h=D.hourly,i0=nowIdx(),n=24,t=h.temperature_2m.slice(i0,i0+n);
-  const W2=Math.max(300,Math.round($('v').clientWidth)||480),H=210,px=22,pt=36,pb=26;
+  const W2=Math.max(300,Math.round($('v').clientWidth)||480),H=232,px=22,pt=58,pb=26;
   const bd=D.band?D.band.slice(i0,i0+n):null,bv=bd?bd.filter(Boolean).flat():[],today=D.current.time.slice(0,10);
-  const mn=Math.min(...t,...bv),mx=Math.max(...t,...bv),rg=(mx-mn)||1;
+  const mn=Math.min(...t),mx=Math.max(...t),rg=(mx-mn)||1;
   const X=i=>px+i*(W2-2*px)/(n-1),Y=v=>pt+(1-(v-mn)/rg)*(H-pt-pb);
   const line=t.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('');
   const area=line+'L'+X(n-1)+' '+(H-pb)+'L'+X(0)+' '+(H-pb)+'Z';
@@ -362,7 +371,7 @@ function vHours(){
   const cw=(W2-2*px)/(n-1);
   for(let i=0;i<n;i++){const ts=h.time[i0+i],dk=D.daily.time.indexOf(ts.slice(0,10)),hh=+ts.slice(11,13);
     if(dk>=0){const sr=Math.round(clock(D.daily.sunrise[dk].slice(11))),ss=Math.round(clock(D.daily.sunset[dk].slice(11)));
-      if(hh===sr||hh===ss) nt+='<line x1="'+X(i).toFixed(1)+'" x2="'+X(i).toFixed(1)+'" y1="'+(pt-2)+'" y2="'+(H-pb)+'" stroke="var(--mut)" stroke-opacity=".3" stroke-dasharray="2 5"/>'+sunIcon(X(i),pt-6,hh===sr,(hh===sr?D.daily.sunrise[dk]:D.daily.sunset[dk]).slice(11),W2);}}
+      if(hh===sr||hh===ss) nt+='<line x1="'+X(i).toFixed(1)+'" x2="'+X(i).toFixed(1)+'" y1="26" y2="'+(H-pb)+'" stroke="var(--mut)" stroke-opacity=".3" stroke-dasharray="2 5"/>'+sunIcon(X(i),22,hh===sr,(hh===sr?D.daily.sunrise[dk]:D.daily.sunset[dk]).slice(11),W2);}}
   const good=[];
   for(let i=0;i<n;i++){const j=i0+i,ts=h.time[j],dk=D.daily.time.indexOf(ts.slice(0,10)),hh=+ts.slice(11,13);
     good.push(dk>=0&&hh>=clock(D.daily.sunrise[dk].slice(11))&&hh<=clock(D.daily.sunset[dk].slice(11))&&(h.precipitation_probability[j]||0)<25&&h.weather_code[j]<51&&h.wind_speed_10m[j]<8)}
@@ -374,15 +383,15 @@ function vHours(){
   G={W2,px,n,X,Y,t,i0,H,pb,pt};
   return '<div class="glass"><div class="hint">Проведіть по графіку, щоб побачити погоду на вибрану годину</div><div class="rd" id="rd"></div>'
    +'<svg id="ch" viewBox="0 0 '+W2+' '+H+'" tabindex="0" role="slider" aria-label="Година прогнозу" aria-valuemin="0" aria-valuemax="23">'
-   +'<defs><mask id="mm"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><circle cx="5" cy="-3" r="7.5" fill="#000"/></mask><clipPath id="hz"><rect x="-18" y="-20" width="36" height="20"/></clipPath><linearGradient id="ng" x1="0" x2="1"><stop offset="0" stop-color="#6ff0ff"/><stop offset=".55" stop-color="#c9b8ff"/><stop offset="1" stop-color="#ff9de6"/></linearGradient>'
+   +'<defs><mask id="mm"><rect x="-12" y="-12" width="24" height="24" fill="#fff"/><circle cx="5" cy="-3" r="7.5" fill="#000"/></mask><clipPath id="hz"><rect x="-18" y="-20" width="36" height="20"/></clipPath><linearGradient id="ng" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffe9a8"/></linearGradient>'
    +'<linearGradient id="na" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
    +'<filter id="gl" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-   +nt+band+'<path d="'+area+'" fill="url(#na)"/>'
+   +nt+'<path d="'+area+'" fill="url(#na)"/>'
    +'<line id="gd" y1="'+(pt-14)+'" y2="'+(H-pb)+'" stroke="var(--mut)" stroke-opacity=".45" stroke-dasharray="3 4"/>'
    +'<path d="'+line+'" fill="none" stroke="url(#ng)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#gl)"/>'+lab
    +'<g id="mk"><circle id="mkr" class="ring" r="14" fill="#ffd36e"/><circle r="15" fill="rgba(255,255,255,.92)" filter="url(#gl)"/><g id="mki"></g></g></svg></div>'
    +'<div class="glass" style="margin-top:12px"><div class="grid">'+cells+'</div></div>'
-   +'<div class="glass" style="margin-top:12px"><div class="hint">Найкраще вікно для прогулянки</div>'+win+'</div><div class="note">Світла смуга навколо лінії показує розбіжність моделей: чим вона ширша, тим менше можна довіряти прогнозу. Пунктир із 🌅 і 🌇 показує схід і захід сонця.'+(D.blend?' Температура, вітер і ймовірність опадів усереднені за трьома моделями (ECMWF, ICON, GFS).':'')+' Схід сонця '+D.daily.sunrise[0].slice(11)+', захід '+D.daily.sunset[0].slice(11)+'.</div>';
+   +'<div class="glass" style="margin-top:12px"><div class="hint">Найкраще вікно для прогулянки</div>'+win+'</div><div class="note">Пунктир із 🌅 і 🌇 показує схід і захід сонця. Рядок із 🎯 показує, наскільки збігаються три моделі прогнозу.'+(D.blend?' Температура, вітер і ймовірність опадів усереднені за трьома моделями (ECMWF, ICON, GFS).':'')+' Схід сонця '+D.daily.sunrise[0].slice(11)+', захід '+D.daily.sunset[0].slice(11)+'.</div>';
 }
 function scrub(){
   const svg=$('ch'),g=G,h=D.hourly,today=D.current.time.slice(0,10);
@@ -390,8 +399,8 @@ function scrub(){
     sel=Math.max(0,Math.min(g.n-1,i));const j=g.i0+sel,x=g.X(sel),y=g.Y(g.t[sel]),dt=h.time[j],[em,tx]=wi(h.weather_code[j]);
     $('mk').setAttribute('transform','translate('+x.toFixed(1)+' '+y.toFixed(1)+')');
     $('gd').setAttribute('x1',x);$('gd').setAttribute('x2',x);svg.setAttribute('aria-valuenow',sel);
-    $('rd').innerHTML='<span class="re">'+em+'</span><span class="rt">'+r(h.temperature_2m[j])+'°</span><span class="rx"><b>'+(dt.slice(0,10)===today?'Сьогодні':'Завтра')+'<em>'+dt.slice(11)+'</em></b><span class="dt">'+new Date(dt.slice(0,10)+'T12:00').toLocaleDateString('uk',{weekday:'long',day:'numeric',month:'long'})+'</span>'+tx
-      +'<br>Відчувається як '+r(h.apparent_temperature[j])+'°, вітер '+r(h.wind_speed_10m[j])+' м/с, опади '+(h.precipitation_probability[j]||0)+'%</span>';
+    $('rd').innerHTML='<span class="re">'+em+'</span><span class="rt">'+r(h.temperature_2m[j])+'°</span><span class="rx"><b>'+(dt.slice(0,10)===today?'Сьогодні':'Завтра')+'<em>'+dt.slice(11)+'</em></b><span class="dt">'+cap(new Date(dt.slice(0,10)+'T12:00').toLocaleDateString('uk',{weekday:'long',day:'numeric',month:'long'}))+'</span>'+tx
+      +'<br>Відчувається як '+r(h.apparent_temperature[j])+'°, вітер '+r(h.wind_speed_10m[j])+' м/с, опади '+(h.precipitation_probability[j]||0)+'%'+cf(j)+'</span>';
     document.querySelectorAll('.grid>div').forEach((c,k)=>c.classList.toggle('on',k===sel));
     const dk=D.daily.time.indexOf(dt.slice(0,10)),hr=+dt.slice(11,13),sr=dk<0?7:clock(D.daily.sunrise[dk].slice(11)),ss=dk<0?19:clock(D.daily.sunset[dk].slice(11));
     const nightSel=hr<sr||hr>ss;
@@ -421,8 +430,8 @@ function vDays(){
   const pH=hi.map((v,i)=>[X(i),Y(v)]),pL=lo.map((v,i)=>[X(i),Y(v)]);
   let dots='',lab='',cols='';
   for(let i=0;i<n;i++){
-    dots+='<circle class="dd" data-i="'+i+'" cx="'+pH[i][0].toFixed(1)+'" cy="'+pH[i][1].toFixed(1)+'" r="4" fill="#fff" stroke="#ff8fe0" stroke-width="2"/>'
-      +'<circle class="dd" data-i="'+i+'" cx="'+pL[i][0].toFixed(1)+'" cy="'+pL[i][1].toFixed(1)+'" r="4" fill="#fff" stroke="#4df3ff" stroke-width="2"/>';
+    dots+='<circle class="dd" data-i="'+i+'" cx="'+pH[i][0].toFixed(1)+'" cy="'+pH[i][1].toFixed(1)+'" r="4" fill="#fff" stroke="#fff" stroke-width="2"/>'
+      +'<circle class="dd" data-i="'+i+'" cx="'+pL[i][0].toFixed(1)+'" cy="'+pL[i][1].toFixed(1)+'" r="4" fill="#fff" stroke="#bfe3ff" stroke-width="2"/>';
     lab+='<text class="tl2" data-i="'+i+'" x="'+pH[i][0].toFixed(1)+'" y="'+(pH[i][1]-12).toFixed(1)+'" font-size="15" font-weight="600" text-anchor="middle" fill="#fff" opacity="0">'+r(hi[i])+'°</text>'
       +'<text class="tl2" data-i="'+i+'" x="'+pL[i][0].toFixed(1)+'" y="'+(pL[i][1]+24).toFixed(1)+'" font-size="14" text-anchor="middle" fill="#fff" opacity="0">'+r(lo[i])+'°</text>';
     const dt=new Date(d.time[i]+'T12:00'),pr=+d.precipitation_sum[i],code=d.weather_code[i];
@@ -435,9 +444,9 @@ function vDays(){
   return '<div class="glass"><div class="hint">Торкніться дня або проведіть по графіку</div><div class="rd" id="drd"></div>'
    +'<div class="dwrap"><div class="hl" id="hl"></div><div class="dgrid">'+cols+'</div>'
    +'<svg id="dch" viewBox="0 0 '+W2+' '+H+'"><defs>'
-   +'<linearGradient id="gmax" x1="0" x2="1"><stop offset="0" stop-color="#ff5fd2"/><stop offset="1" stop-color="#ffb347"/></linearGradient>'
-   +'<linearGradient id="gmin" x1="0" x2="1"><stop offset="0" stop-color="#4df3ff"/><stop offset="1" stop-color="#8a7bff"/></linearGradient>'
-   +'<linearGradient id="gband" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fe0" stop-opacity=".28"/><stop offset="1" stop-color="#4df3ff" stop-opacity=".2"/></linearGradient>'
+   +'<linearGradient id="gmax" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>'
+   +'<linearGradient id="gmin" x1="0" x2="1"><stop offset="0" stop-color="#bfe3ff"/><stop offset="1" stop-color="#bfe3ff"/></linearGradient>'
+   +'<linearGradient id="gband" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient>'
    +'<filter id="bl" x="-10%" y="-40%" width="120%" height="180%"><feGaussianBlur stdDeviation="5"/></filter></defs>'
    +'<path d="'+band+'" fill="url(#gband)"/>'
    +'<path class="gl" d="'+smooth(pH)+'" fill="none" stroke="url(#gmax)" stroke-width="8" filter="url(#bl)"/><path d="'+smooth(pH)+'" fill="none" stroke="url(#gmax)" stroke-width="3.2" stroke-linecap="round"/>'
@@ -499,7 +508,7 @@ function subHtml(){
 function vAdvice(){
   if(!cat) setTimeout(openCat,60);
   const c=CATS.find(x=>x[0]===cc());
-  return '<div class="glass"><button class="cbtn" id="cbtn" aria-haspopup="dialog"><span class="ce">'+c[1]+'</span><span><small>Категорія</small><b>'+c[2]+', '+c[3]+'</b></span><span class="chv">змінити ▾</span></button>'+subHtml()
+  return '<div class="glass"><button class="cbtn" id="cbtn" aria-haspopup="dialog" title="Змінити категорію" aria-label="Змінити категорію, зараз: '+c[2]+'"><span class="ce">'+c[1]+'</span><span><small>Категорія</small><b>'+c[2]+', '+c[3]+'</b></span><span class="chv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"/></svg></span></button>'+subHtml()
    +(cc()==='auto'?'':'<div class="hint" style="margin-top:14px">Коли</div><div class="tm"><b id="kt"></b><span id="kf"></span></div><input type="range" id="ks" min="0" max="23" value="'+csel+'" aria-label="Година">')
    +'</div><div id="kr"></div><div class="note" id="kn"></div>';
 }
